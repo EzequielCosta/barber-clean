@@ -18,9 +18,7 @@ class ServicoFactory
         return new Servico(
             nome: $servicoDTO->nome,
             duracao: $servicoDTO->getDuracao(),
-            valor: $servicoDTO->getValor(),
-            createdAt: $servicoDTO->createdAt,
-            updatedAt: $servicoDTO->updatedAt
+            valor: $servicoDTO->getValor()
         );
     }
 }

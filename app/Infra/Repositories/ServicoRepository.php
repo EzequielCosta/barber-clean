@@ -32,10 +32,10 @@ class ServicoRepository implements ServicoRepositoryInterface
     /**
      * @param ServicoDTO $servicoDTO
      * @param int $servicoId
-     * @return void
+     * @return ServicoDTO
      */
-    public function editar(ServicoDTO $servicoDTO, int $servicoId): void
+    public function editar(ServicoDTO $servicoDTO, int $servicoId): ServicoDTO
     {
-        $this->servicoPDOAdapter->editar($servicoDTO, $servicoId);
+        return $this->servicoPDOAdapter->editar($servicoDTO, $servicoId);
     }
 }

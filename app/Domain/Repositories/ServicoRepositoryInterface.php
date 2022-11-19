@@ -8,5 +8,5 @@ interface ServicoRepositoryInterface
 {
     public function adicionar(ServicoDTO $servicoDTO) : void;
     public function remover(int $servicoId) : void;
-    public function editar(ServicoDTO $servicoDTO, int $servicoId) : void;
+    public function editar(ServicoDTO $servicoDTO, int $servicoId) : ServicoDTO;
 }

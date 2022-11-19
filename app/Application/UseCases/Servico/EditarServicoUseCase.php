@@ -14,9 +14,10 @@ class EditarServicoUseCase
     public function handle(ServicoDTO $servicoDTO, int $servicoId): ?Servico
     {
         try {
-            $this->servicoRepository->editar($servicoDTO, $servicoId);
-            return $this->servicoFactory->fromDTO($servicoDTO);
+            $servicoDTOAtualizado = $this->servicoRepository->editar($servicoDTO, $servicoId);
+            return $this->servicoFactory->fromDTO($servicoDTOAtualizado);
         } catch (\Exception  $exception) {
+            echo $exception->getMessage();
             return null;
         }
     }

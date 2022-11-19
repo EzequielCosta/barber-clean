@@ -1,14 +1,14 @@
 <?php
-declare(strict_types=1);
 
-namespace App\Domain\Entities;
+namespace App\Domain\DTOs;
 
+use App\Domain\Entities\ServicosAgendamento;
+use App\Domain\Entities\Usuario;
 use App\Domain\Exceptions\InvalidValueException;
 use DateTime;
 
-final class Agendamento
+class AgendamentoDTO
 {
-
     private float $valorTotal;
 
     /**
@@ -27,8 +27,8 @@ final class Agendamento
         public Usuario                      $cliente,
         public Usuario                      $funcionario,
         float                               $valorTotal,
-        public DateTime                     $horario,
-        public DateTime                     $data,
+        public DateTime                    $horario,
+        public DateTime                    $data,
         public string                       $status,
         public readonly ServicosAgendamento $servicosAgendamento,
     )
@@ -56,5 +56,4 @@ final class Agendamento
         }
         $this->valorTotal = $valor;
     }
-
 }

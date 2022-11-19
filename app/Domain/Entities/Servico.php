@@ -15,11 +15,9 @@ final class Servico
      * @param string $nome
      * @param int $duracao
      * @param float $valor
-     * @param \DateTime|null $createdAt
-     * @param \DateTime|null $updatedAt
      * @throws InvalidValueException
      */
-    public function __construct(string $nome, int $duracao, float $valor, public ?\DateTime $createdAt, public ?\DateTime $updatedAt)
+    public function __construct(public readonly ?int $id, string $nome, int $duracao, float $valor)
     {
         $this->nome = $nome;
         $this->setDuracao($duracao);
@@ -52,6 +50,14 @@ final class Servico
         }
 
         $this->valor = $valor;
+    }
+
+    /**
+     * @return float
+     */
+    public function getValor(): float
+    {
+        return $this->valor;
     }
 
 }

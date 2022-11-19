@@ -17,7 +17,7 @@ final class ServicoDTO
      * @param float|null $valor
      * @throws InvalidValueException
      */
-    public function __construct(public ?string $nome, ?int $duracao , ?float $valor,)
+    public function __construct(public ?string $nome, ?int $duracao, ?float $valor,)
     {
         $this->setValor($valor);
         $this->setDuracao($duracao);
@@ -30,7 +30,7 @@ final class ServicoDTO
      */
     public function setDuracao(?int $valor): void
     {
-        if ($valor !== null &&  $valor <= 0) {
+        if ($valor !== null && $valor <= 0) {
             throw new InvalidValueException("O valor deverá ser maior que zero ");
         }
 
@@ -65,6 +65,23 @@ final class ServicoDTO
     public function getValor(): ?float
     {
         return $this->valor;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributesFilled(): array
+    {
+        $attributes = get_object_vars($this);
+        $attributesFilled = [];
+
+        foreach ($attributes as $attributeName => $attributeValue) {
+            if ($attributeValue !== null && $attributeValue !== '') {
+                $attributesFilled[$attributeName] = $attributeValue;
+            }
+        }
+
+        return $attributesFilled;
     }
 
 }

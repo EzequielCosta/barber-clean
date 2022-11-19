@@ -32,7 +32,7 @@ try {
 
     // Remover Servico
 
-    $removerServicoUseCase = new RemoverServicoUseCase($servicoRepository);
+    //$removerServicoUseCase = new RemoverServicoUseCase($servicoRepository);
 
 //    $servicoRemovido = $removerServicoUseCase->handle(3);
 //    echo $servicoRemovido ? 'Serviço removido' : 'Não foi possível remover o servico';
@@ -40,9 +40,9 @@ try {
     //Editar Servico
 
     $editarServicoUseCase = new EditarServicoUseCase($servicoRepository, $servicoFactory);
-    $servicoDTO2 = new ServicoDTO(null,null, valor: 30.0);
-    $servicoRemovido = $editarServicoUseCase->handle($servicoDTO2, 3);
-    echo $servicoRemovido ? 'Serviço editado' : 'Não foi possível editar o servico';
+    $servicoDTO2 = new ServicoDTO("Corte na navalha",40, valor: 50.0);
+    $servicoRemovido = $editarServicoUseCase->handle($servicoDTO2, 1);
+    echo $servicoRemovido ? 'Serviço editado'.PHP_EOL : 'Não foi possível editar o servico'.PHP_EOL;
 
 } catch (\Exception $e) {
     echo $e->getMessage();

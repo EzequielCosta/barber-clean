@@ -7,9 +7,8 @@ final class ServicoAgendamento
 {
 
     public function __construct(
+        public readonly ?int $id,
         public Agendamento $agendamento,
-        public Servico $servico,
-        public ?\DateTime $createdAt,
-        public ?\DateTime $updatedAt
+        public Servico $servico
     ){}
 }
