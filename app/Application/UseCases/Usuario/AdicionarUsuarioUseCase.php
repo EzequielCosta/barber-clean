@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCases\Usuario;
 
-use App\Domain\DTOs\ServicoDTO;
+use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
 
@@ -13,7 +13,7 @@ class AdicionarUsuarioUseCase
         public UsuarioRepositoryInterface $userRepository
     ){}
 
-    public function handle(ServicoDTO $usuarioDTO) : Usuario
+    public function handle(UsuarioDTO $usuarioDTO) : Usuario
     {
         return $this->userRepository->adicionar($usuarioDTO);
     }

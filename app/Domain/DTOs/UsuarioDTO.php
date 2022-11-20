@@ -10,11 +10,12 @@ use App\Domain\ValueObjects\Telefone;
 final class UsuarioDTO
 {
     public function __construct(
-        public ?string    $nome,
-        public ?Email     $email,
-        public ?Telefone  $telefone,
-        public ?string    $profile,
-        public ?Endereco  $endereco
+        public ?string   $nome,
+        public ?Email    $email,
+        public ?Telefone $telefone,
+        public ?string   $profile,
+        public ?Endereco $endereco,
+        public ?int      $id = null
     )
     {
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Application\UseCases\Usuario\AdicionarUsuarioUseCase;
-use App\Domain\DTOs\ServicoDTO;
+use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\ValueObjects\Email;
 use App\Domain\ValueObjects\Endereco;
 use App\Domain\ValueObjects\Telefone;
@@ -14,6 +14,9 @@ use App\Infra\Repositories\UsuarioRepository;
 
 
 $PERFIL_ADMINISTRADOR = '1';
+$PERFIL_CLIENTE = '4';
+
+$profileConfig = require_once __DIR__ . '/../configs/user_profiles.php';
 
 $endereco = new Endereco(
     'Rua Alice Fernandes',
@@ -27,12 +30,12 @@ $timestampCurrent = DateTime::createFromFormat('Y-m-d H:m:i', date('Y-m-d H:m:i'
 
 try {
     $usuarioDTO = new UsuarioDTO(
-        nome: "Ezequiel Teixeira Costa",
-        email: new Email("ezequiel@example.com"),
-        telefone: new Telefone("86999445566"),
-        createdAt: $timestampCurrent,
-        updatedAt: $timestampCurrent,
-        profile: $PERFIL_ADMINISTRADOR,
+        nome: "Carlos Henrique do Nascimento",
+        email: new Email("carlos@example.com"),
+        telefone: new Telefone("86999776644"),
+//        createdAt: $timestampCurrent,
+//        updatedAt: $timestampCurrent,
+        profile: $profileConfig["CLIENTE"],
         endereco: $endereco,
     );
 } catch (\App\Domain\Exceptions\InvalidValueException $e) {
@@ -53,7 +56,7 @@ $PDO = new PDO(
 $postgresAdpater = new UsuarioPostgresPDOAdapter($PDO);
 $usuarioRepository = new UsuarioRepository($postgresAdpater);
 $adicionarUsuarioUseCase = new AdicionarUsuarioUseCase($usuarioRepository);
-//$adicionarUsuarioUseCase->handle($usuarioDTO);
+$adicionarUsuarioUseCase->handle($usuarioDTO);
 
 //$removerUsuarioUseCase = new RemoverUsuarioUseCase($usuarioRepository);
 //echo $removerUsuarioUseCase->handle(1) ? 'Removido'.PHP_EOL : 'Não removido'.PHP_EOL;
@@ -64,8 +67,8 @@ try {
         nome: "Ezequiel Teixeira Costa",
         email: new Email("ezequielcosta@example.com"),
         telefone: new Telefone("86999445566"),
-        createdAt: $timestampCurrent,
-        updatedAt: $timestampCurrent,
+//        createdAt: $timestampCurrent,
+//        updatedAt: $timestampCurrent,
         profile: $PERFIL_ADMINISTRADOR,
         endereco: $endereco,
     );
@@ -77,9 +80,9 @@ $usuarioFactory = new \App\Application\Factories\UsuarioFactory();
 
 
 $editarUsuarioUseCase = new \App\Application\UseCases\Usuario\EditarUsuarioUseCase($usuarioRepository, $usuarioFactory);
-$usuarioAtualizado = $editarUsuarioUseCase->handle($usuarioDTO2, 2);
+///$usuarioAtualizado = $editarUsuarioUseCase->handle($usuarioDTO2, 2);
 
-echo $usuarioAtualizado !== null ? 'Usuário Atualizado' . PHP_EOL : 'Erro ao Atualizar' . PHP_EOL;
+//echo $usuarioAtualizado !== null ? 'Usuário Atualizado' . PHP_EOL : 'Erro ao Atualizar' . PHP_EOL;
 
 
 

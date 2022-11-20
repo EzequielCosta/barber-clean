@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Infra\Adapters;
+namespace App\Domain\Repositories;
 
 use App\Domain\DTOs\AgendamentoDTO;
 use App\Domain\Entities\Agendamento;
 
-interface AgendamentoPDOAdapter
+interface AgendamentoRepositoryInterface
 {
     public function agendarServico(AgendamentoDTO $agendamentoDTO): Agendamento;
+
 }

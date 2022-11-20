@@ -2,7 +2,9 @@
 
 namespace App\Infra\Adapters;
 
+use App\Application\Factories\ServicoFactory;
 use App\Domain\DTOs\ServicoDTO;
+use App\Domain\Entities\Servico;
 use App\Domain\Exceptions\DataBaseException;
 use App\Domain\Exceptions\InvalidValueException;
 use PDO;
@@ -99,12 +101,18 @@ class ServicoPostgresPDOAdapter implements ServicoPDOAdapter
         ));
     }
 
-    public function getServicoById(int $servicoId)
+    /**
+     * @param int $servicoId
+     * @return Servico
+     * @throws InvalidValueException
+     */
+    public function getServicoById(int $servicoId): Servico
     {
-
         $statement = $this->PDO->prepare("select * from servico where id = :id");
-
+        $statement->execute([$servicoId]);
         $servico = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return (new ServicoFactory())->fromArray($servico);
 
     }
 }

@@ -21,4 +21,19 @@ class ServicoFactory
             valor: $servicoDTO->getValor()
         );
     }
+
+    /**
+     * @param array $dado
+     * @return Servico
+     * @throws InvalidValueException
+     */
+    public function fromArray(array $dado): Servico
+    {
+        return new Servico(
+            nome: $dado["nome"],
+            duracao: $dado["duracao"],
+            valor: $dado["valor"],
+            id: $dado["id"]
+        );
+    }
 }
