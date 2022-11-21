@@ -7,6 +7,7 @@ use App\Domain\Exceptions\InvalidValueException;
 
 final class Servico
 {
+    public readonly ?int $id;
     public string $nome;
     private int $duracao;
     private float $valor;
@@ -15,13 +16,15 @@ final class Servico
      * @param string $nome
      * @param int $duracao
      * @param float $valor
+     * @param int|null $id
      * @throws InvalidValueException
      */
-    public function __construct(public readonly ?int $id, string $nome, int $duracao, float $valor)
+    public function __construct( string $nome, int $duracao, float $valor,  ?int $id = null)
     {
         $this->nome = $nome;
         $this->setDuracao($duracao);
         $this->setValor($valor);
+        $this->id = $id;
     }
 
     /**

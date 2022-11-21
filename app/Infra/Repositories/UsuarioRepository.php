@@ -2,7 +2,7 @@
 
 namespace App\Infra\Repositories;
 
-use App\Domain\DTOs\ServicoDTO;
+use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
 use App\Infra\Adapters\UsuarioPDOAdapter;
@@ -12,10 +12,10 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     public function __construct(private readonly UsuarioPDOAdapter $PDOAdapter){}
 
     /**
-     * @param ServicoDTO $usuarioDTO
+     * @param UsuarioDTO $usuarioDTO
      * @return Usuario
      */
-    public function adicionar(ServicoDTO $usuarioDTO): Usuario
+    public function adicionar(UsuarioDTO $usuarioDTO): Usuario
     {
         return $this->PDOAdapter->adicionar($usuarioDTO);
     }
@@ -30,12 +30,21 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     }
 
     /**
-     * @param ServicoDTO $usuarioDTO
+     * @param UsuarioDTO $usuarioDTO
      * @param int $usuarioID
      * @return void
      */
-    public function editar(ServicoDTO $usuarioDTO, int $usuarioID): void
+    public function editar(UsuarioDTO $usuarioDTO, int $usuarioID): void
     {
         $this->PDOAdapter->editar($usuarioDTO, $usuarioID);
+    }
+
+    /**
+     * @param int $usuarioID
+     * @return Usuario
+     */
+    public function getUsuarioById(int $usuarioID): Usuario
+    {
+        return $this->PDOAdapter->getUsuarioById($usuarioID);
     }
 }

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-final class ServicosAgendamento
+final class Servicos
 {
     private array $itens;
 
@@ -13,23 +13,23 @@ final class ServicosAgendamento
     }
 
     /**
-     * @param ServicoAgendamento $servicoAgendamento
+     * @param Servico $servico
      * @return void
      */
-    public function adicionar(ServicoAgendamento $servicoAgendamento): void
+    public function adicionar(Servico $servico): void
     {
-        $this->itens[] = $servicoAgendamento;
+        $this->itens[] = $servico;
     }
 
     /**
-     * @param int $servicoAgendamentoId
+     * @param int $servicoId
      * @return void
      */
-    public function removerPeloId(int $servicoAgendamentoId): void
+    public function removerPeloId(int $servicoId): void
     {
 
         foreach ($this->itens as $key => $servico) {
-            if ($servico->id === $servicoAgendamentoId) {
+            if ($servico->id === $servicoId) {
                 unset($this->itens[$key]);
                 break;
             }
@@ -46,14 +46,14 @@ final class ServicosAgendamento
     }
 
     /**
-     * @param ServicoAgendamento $servicoAgendamento
+     * @param Servico $servico
      * @return void
      */
-    public function removerPeloNomeDoServico(ServicoAgendamento $servicoAgendamento): void
+    public function removerPeloNomeDoServico(Servico $servico): void
     {
 
-        foreach ($this->itens as $key => $servico) {
-            if ($servicoAgendamento->servico->nome === $servico->servico->nome) {
+        foreach ($this->itens as $key => $item) {
+            if ($servico->nome === $item->nome) {
                 unset($this->itens[$key]);
                 break;
             }
@@ -69,13 +69,13 @@ final class ServicosAgendamento
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function valorTotal(): int
+    public function valorTotal(): float
     {
         $soma = 0;
-        foreach ($this->itens as $servicoAgendamento) {
-            $soma += $soma;
+        foreach ($this->itens as $servico) {
+            $soma += $servico->getValor();
         }
 
         return $soma;

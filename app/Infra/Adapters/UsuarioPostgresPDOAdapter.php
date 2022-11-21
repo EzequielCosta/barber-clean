@@ -7,6 +7,7 @@ use App\Application\Factories\UsuarioFactory;
 use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Exceptions\DataBaseException;
+use App\Domain\Exceptions\InvalidValueException;
 use PDO;
 
 class UsuarioPostgresPDOAdapter implements UsuarioPDOAdapter
@@ -78,7 +79,7 @@ class UsuarioPostgresPDOAdapter implements UsuarioPDOAdapter
      */
     public function editar(UsuarioDTO $usuarioDTO, int $usuarioID): void
     {
-        try{
+        try {
 
             $sql = "update usuario set nome = :nome ,
                 email = :email, 
@@ -93,22 +94,42 @@ class UsuarioPostgresPDOAdapter implements UsuarioPDOAdapter
                where id = :id";
 
             $statementEditarUsuario = $this->PDO->prepare($sql);
-            $usuarioSave =  $statementEditarUsuario->execute([
-                $usuarioDTO->nome, $usuarioDTO->email->getValor(), $usuarioDTO?->telefone->getValor(), date('Y-m-d H:m:i') ,
+            $usuarioSave = $statementEditarUsuario->execute([
+                $usuarioDTO->nome, $usuarioDTO->email->getValor(), $usuarioDTO?->telefone->getValor(), date('Y-m-d H:m:i'),
                 $usuarioDTO?->endereco->logradouro, $usuarioDTO?->endereco->numero, $usuarioDTO?->endereco->cep, $usuarioDTO?->endereco->bairro,
                 $usuarioDTO->profile,
                 date('Y-m-d H:m:i'),
                 $usuarioID
             ]);
 
-            if (!$usuarioSave){
+            if (!$usuarioSave) {
                 throw new DataBaseException("Não foi possível editar o usuário");
             }
 
             //return $this->usuarioFactory->fromDTO($usuarioDTO);
 
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             throw new DataBaseException($exception->getMessage());
         }
+    }
+
+    /**
+     * @param int $usuarioID
+     * @return Usuario
+     * @throws DataBaseException
+     */
+    public function getUsuarioById(int $usuarioID): Usuario
+    {
+        $statementUsuario = $this->PDO->prepare("select * from usuario where id = ?");
+        $statementUsuario->bindParam(1, $usuarioID);
+        try {
+            $statementUsuario->execute();
+            $dado = $statementUsuario->fetch(PDO::FETCH_ASSOC);
+
+            return (new UsuarioFactory())->fromArray($dado);
+        } catch (\Exception $exception) {
+            throw new DataBaseException("Não foi possível resgatar o usuário.");
+        }
+
     }
 }

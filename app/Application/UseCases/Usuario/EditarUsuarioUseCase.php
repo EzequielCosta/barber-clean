@@ -3,7 +3,7 @@
 namespace App\Application\UseCases\Usuario;
 
 use App\Application\Factories\UsuarioFactory;
-use App\Domain\DTOs\ServicoDTO;
+use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
 use App\Infra\Repositories\UsuarioRepository;
@@ -15,11 +15,11 @@ class EditarUsuarioUseCase
     }
 
     /**
-     * @param ServicoDTO $usuarioDTO
+     * @param UsuarioDTO $usuarioDTO
      * @param int $usuarioId
      * @return Usuario|null
      */
-    public function handle(ServicoDTO $usuarioDTO, int $usuarioId): ?Usuario
+    public function handle(UsuarioDTO $usuarioDTO, int $usuarioId): ?Usuario
     {
         try {
             $this->usuarioRepository->editar($usuarioDTO, $usuarioId);

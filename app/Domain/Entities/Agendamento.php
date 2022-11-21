@@ -8,7 +8,7 @@ use DateTime;
 
 final class Agendamento
 {
-
+    public readonly ?int     $id;
     private float $valorTotal;
 
     /**
@@ -19,21 +19,22 @@ final class Agendamento
      * @param DateTime $horario
      * @param DateTime $data
      * @param string $status
-     * @param ServicosAgendamento $servicosAgendamento
+     * @param Servicos $servicos
      * @throws InvalidValueException
      */
     public function __construct(
-        public readonly ?int                $id,
-        public Usuario                      $cliente,
-        public Usuario                      $funcionario,
-        float                               $valorTotal,
-        public DateTime                     $horario,
-        public DateTime                     $data,
-        public string                       $status,
-        public readonly ServicosAgendamento $servicosAgendamento,
+        public Usuario           $cliente,
+        public Usuario           $funcionario,
+        float                    $valorTotal,
+        public DateTime          $horario,
+        public DateTime          $data,
+        public string            $status,
+        public readonly Servicos $servicos,
+        ?int $id = null
     )
     {
         $this->setValorTotal($valorTotal);
+        $this->id = $id;
     }
 
     /**
