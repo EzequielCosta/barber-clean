@@ -29,18 +29,34 @@ SimpleRouter::group(["prefix" => '/usuario'], function () {
         $request = new \App\Infra\Http\Requests\SimpleRouterRequest($requestSimpleRouter);
         $response = new \App\Infra\Http\Responses\SimpleRouterResponse($responseSimpleRouter);
 
-        $PDO = (new PDOConnection())->connect(getenv("DATABASE_DRIVER"));
-        $usuarioPostgresPDOAdapter = new UsuarioPostgresPDOAdapter($PDO);
-        $repository = new UsuarioRepository($usuarioPostgresPDOAdapter);
-        $useCase = new \App\Application\UseCases\Usuario\AdicionarUsuarioUseCase($repository);
 
-        $controller = new AdicionarUsuarioController($useCase, $request, $response);
-        $presenter = new AdicionarUsuarioPresenter();
-        $output = $controller->handle($presenter);
-        $response->setStatusCode(203);
-        $response->setHeaders([
-            "contentType" => "application/json"
-        ]);
+        try {
+            $PDO = (new PDOConnection())->connect(getenv("DATABASE_DRIVER"));
+            $usuarioPostgresPDOAdapter = new UsuarioPostgresPDOAdapter($PDO);
+            $repository = new UsuarioRepository($usuarioPostgresPDOAdapter);
+            $useCase = new \App\Application\UseCases\Usuario\AdicionarUsuarioUseCase($repository);
+
+            $controller = new AdicionarUsuarioController($useCase, $request, $response);
+            $presenter = new AdicionarUsuarioPresenter();
+            $output = $controller->handle($presenter);
+            $response->setStatusCode(203);
+
+            $response->setHeaders([
+                "contentType" => "application/json"
+            ]);
+        } catch (Exception|Error $exception) {
+            $response->setStatusCode(500);
+            $response->json([
+                "error" => $exception->getMessage()
+            ]);
+        }
+//        $controller = new AdicionarUsuarioController($useCase, $request, $response);
+//        $presenter = new AdicionarUsuarioPresenter();
+//        $output = $controller->handle($presenter);
+//        $response->setStatusCode(203);
+//        $response->setHeaders([
+//            "contentType" => "application/json"
+//        ]);
 
         return $response;
     });
