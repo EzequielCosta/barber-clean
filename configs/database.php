@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "driver" => "postgres",
     "drives" => [
         "postgres" => [
             "database" => "barbearia",
