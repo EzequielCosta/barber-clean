@@ -6,7 +6,7 @@ use App\Application\Factories\UsuarioFactory;
 use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
-use App\Infra\Repositories\UsuarioRepository;
+use App\Infra\Repositories\UsuarioPDORepository;
 
 class EditarUsuarioUseCase
 {

@@ -12,10 +12,10 @@ class UsuarioRepository implements UsuarioRepositoryInterface
     public function __construct(private readonly UsuarioPDOAdapter $PDOAdapter){}
 
     /**
-     * @param UsuarioDTO $usuarioDTO
+     * @param Usuario $usuario
      * @return Usuario
      */
-    public function adicionar(UsuarioDTO $usuarioDTO): Usuario
+    public function adicionar(Usuario $usuario): Usuario
     {
         return $this->PDOAdapter->adicionar($usuarioDTO);
     }
