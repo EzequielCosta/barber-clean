@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Application\UseCases\Usuario;
+namespace App\Application\UseCases\Usuario\BuscarUsuarioPeloId;
 
 use App\Domain\Entities\Usuario;
+use App\Domain\Exceptions\RegistroNaoEncontrado;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
 
 class BuscarUsuarioPeloIdUseCase
@@ -14,9 +15,16 @@ class BuscarUsuarioPeloIdUseCase
     /**
      * @param int $usuarioId
      * @return Usuario
+     * @throws RegistroNaoEncontrado
      */
-    public function handle(int $usuarioId) : Usuario
+    public function handle(int $usuarioId): Usuario
     {
-        return $this->usuarioRepository->getUsuarioById($usuarioId);
+        $usuario = $this->usuarioRepository->getUsuarioById($usuarioId);
+
+        if ($usuario === false) {
+            throw new RegistroNaoEncontrado("Usuário não encontrado");
+        }
+
+        return $usuario;
     }
 }

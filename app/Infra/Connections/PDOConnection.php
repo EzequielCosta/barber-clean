@@ -37,7 +37,7 @@ class PDOConnection
 
             );
         } catch (\Exception $exception) {
-            throw new PDOConnectionException("Não foi possível conectar ao banco de dados");
+            throw new PDOConnectionException("Não foi possível conectar ao banco de dados. {$exception->getMessage()}");
         }
     }
 }

@@ -48,4 +48,9 @@ class Telefone
 
         $this->valor = $valor;
     }
+
+    public function __toString(): string
+    {
+        return $this->getValor();
+    }
 }

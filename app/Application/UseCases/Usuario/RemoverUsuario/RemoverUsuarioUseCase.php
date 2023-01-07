@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Application\UseCases\Usuario;
+namespace App\Application\UseCases\Usuario\RemoverUsuario;
 
+use App\Domain\Exceptions\RegistroNaoEncontrado;
 use App\Domain\Repositories\UsuarioRepositoryInterface;
 
 class RemoverUsuarioUseCase
@@ -12,8 +13,18 @@ class RemoverUsuarioUseCase
     {
     }
 
+    /**
+     * @throws RegistroNaoEncontrado
+     */
     public function handle(int $usuarioId): bool
     {
-        return $this->userRepository->remover($usuarioId);
+        $usuarioDeletado =  $this->userRepository->remover($usuarioId);
+
+        if (!$usuarioDeletado) {
+            throw new RegistroNaoEncontrado("Usuário não encontrado");
+        }
+
+        return true;
+
     }
 }

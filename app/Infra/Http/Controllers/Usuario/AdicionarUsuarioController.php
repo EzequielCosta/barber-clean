@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Infra\Http\Controllers;
+namespace App\Infra\Http\Controllers\Usuario;
 
 use App\Application\UseCases\Usuario\AdicionarUsuario\AdicionarUsuarioUseCase;
 use App\Application\UseCases\Usuario\AdicionarUsuario\InputDTO;
-use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\Exceptions\InvalidValueException;
-use App\Domain\ValueObjects\Email;
-use App\Domain\ValueObjects\Endereco;
-use App\Domain\ValueObjects\Telefone;
+use App\Infra\Http\Controllers\PresenterInterface;
 use App\Infra\Http\Requests\RequestInterface;
 use App\Infra\Http\Responses\ResponseInterface;
 
@@ -25,7 +22,8 @@ class AdicionarUsuarioController
     /**
      * @throws InvalidValueException
      */
-    public function handle(PresenterInterface $presenter): string
+    public function handle(PresenterInterface $presenter): void
+
     {
         $dataRequest = $this->request->data();
 
@@ -42,7 +40,7 @@ class AdicionarUsuarioController
 
         $output = $this->useCase->handle($input);
 
-        return $presenter->handle([
+        $outputPresenter = $presenter->handle([
             "id" => $output->id,
             "telefone" => $output->telefone,
             "email" => $output->email,
@@ -52,5 +50,11 @@ class AdicionarUsuarioController
             "logradouro" => $output->logradouro,
             "numero" => $output->numero,
         ]);
+
+        $this->response->setStatusCode("203");
+        $this->response->json([
+                "user" => $outputPresenter
+            ]
+        );
     }
 }

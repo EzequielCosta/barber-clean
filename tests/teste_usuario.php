@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Application\UseCases\Usuario\AdicionarUsuarioUseCase;
+use App\Application\UseCases\Usuario\AdicionarUsuario\AdicionarUsuarioUseCase;
 use App\Domain\DTOs\UsuarioDTO;
 use App\Domain\ValueObjects\Email;
 use App\Domain\ValueObjects\Endereco;
 use App\Domain\ValueObjects\Telefone;
 use App\Infra\Adapters\UsuarioPostgresPDOAdapter;
-use App\Infra\Repositories\UsuarioRepository;
+use App\Infra\Repositories\UsuarioPDORepository;
 
 
 $PERFIL_ADMINISTRADOR = '1';
@@ -54,7 +54,7 @@ $PDO = new PDO(
 );
 
 $postgresAdpater = new UsuarioPostgresPDOAdapter($PDO);
-$usuarioRepository = new UsuarioRepository($postgresAdpater);
+$usuarioRepository = new UsuarioPDORepository($postgresAdpater);
 $adicionarUsuarioUseCase = new AdicionarUsuarioUseCase($usuarioRepository);
 $adicionarUsuarioUseCase->handle($usuarioDTO);
 
@@ -79,7 +79,7 @@ try {
 $usuarioFactory = new \App\Application\Factories\UsuarioFactory();
 
 
-$editarUsuarioUseCase = new \App\Application\UseCases\Usuario\EditarUsuarioUseCase($usuarioRepository, $usuarioFactory);
+$editarUsuarioUseCase = new \App\Application\UseCases\Usuario\EditarUsuario\EditarUsuarioUseCase($usuarioRepository, $usuarioFactory);
 ///$usuarioAtualizado = $editarUsuarioUseCase->handle($usuarioDTO2, 2);
 
 //echo $usuarioAtualizado !== null ? 'Usuário Atualizado' . PHP_EOL : 'Erro ao Atualizar' . PHP_EOL;

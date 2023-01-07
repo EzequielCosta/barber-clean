@@ -2,7 +2,7 @@
 
 use App\Application\UseCases\Agendamento\AgendarServicoUseCase;
 use App\Application\UseCases\Servico\BuscarServicoPeloIdUseCase;
-use App\Application\UseCases\Usuario\BuscarUsuarioPeloIdUseCase;
+use App\Application\UseCases\Usuario\BuscarUsuarioPeloId\BuscarUsuarioPeloIdUseCase;
 use App\Domain\DTOs\AgendamentoDTO;
 use App\Infra\Adapters\AgendamentoPostgresPDOAdapter;
 use App\Infra\Adapters\ServicoPostgresPDOAdapter;
@@ -10,7 +10,7 @@ use App\Infra\Adapters\UsuarioPostgresPDOAdapter;
 use App\Infra\Connections\PDOConnection;
 use App\Infra\Repositories\AgendamentoRepository;
 use App\Infra\Repositories\ServicoRepository;
-use App\Infra\Repositories\UsuarioRepository;
+use App\Infra\Repositories\UsuarioPDORepository;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
@@ -18,7 +18,7 @@ $configConstants = require_once __DIR__.'/../configs/constants.php';
 
 $PDO = (new PDOConnection())->connect("postgres");
 $usuarioPostgresPDOAdapter = new UsuarioPostgresPDOAdapter($PDO);
-$usuarioRepositorio = new UsuarioRepository($usuarioPostgresPDOAdapter);
+$usuarioRepositorio = new UsuarioPDORepository($usuarioPostgresPDOAdapter);
 $buscarUsuarioPeloIdUseCase = new BuscarUsuarioPeloIdUseCase($usuarioRepositorio);
 
 
